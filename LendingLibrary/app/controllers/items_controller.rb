@@ -24,6 +24,8 @@ class ItemsController < ApplicationController
   # GET /items/1/edit
   def edit
     authorize! :edit, @item
+    @components = @item.components
+    @item_category = @item.item_category
   end
 
   def item_components
