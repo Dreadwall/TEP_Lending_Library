@@ -1,4 +1,4 @@
-require 'csv' 
+require 'csv'
 require 'tempfile'
 
 
@@ -14,24 +14,27 @@ class HomeController < ApplicationController
 
   def contact
   end
-  
+
   def privacy
+  end
+
+  def report
   end
 
   def upload_users
   	authorize! :upload_users, nil
   end
-  
+
 
   def create_users
   	authorize! :create_users, nil
- 
+
   	failed_emails = Array.new
   	file = params['create_users']['users_csv'].tempfile
 		csv = CSV.read(file, :headers => true)
 		csv.each do |row|
 			generated_password = Devise.friendly_token.first(8)
-			
+
 			@user = User.new
 			@user.email = row['email']
 			@user.first_name = row['first_name']
@@ -51,7 +54,7 @@ class HomeController < ApplicationController
 				end
 			end
 		end
-		
+
 		if failed_emails.size > 0
 			data = "All users added except for users with the following emails: "+failed_emails.join(", ")
 			send_data( data, :filename => "failed_accounts.txt" )
@@ -59,6 +62,6 @@ class HomeController < ApplicationController
 			redirect_to users_url
 		end
   end
-  
-  
+
+
 end
