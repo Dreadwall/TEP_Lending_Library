@@ -18,7 +18,9 @@
 
         <!-- TODO: add cancan -->
         <%= link_to 'EDIT THIS KIT', edit_item_category_path(@item_category), :class => 'button radius' %>
-        <%= link_to 'SEE RENTAL HISTORY', edit_reservation_path(), :class => 'button radius' %>
+
+        <%= render :partial => 'item_history' %>
+        <a data-open="item_history"><div class="button radius">SEE RENTAL HISTORY</div></a>
 
       </div>
     </div>

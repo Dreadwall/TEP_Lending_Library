@@ -15,6 +15,9 @@ class ItemCategoriesController < ApplicationController
   def show
     authorize! :show, @item_category
     @kits_count = Item.available_for_kits.select{|i| i.item_category.id == @item_category.id}.count
+    # TODO: item for reservation scope in reservation model?
+    @reservations = Reservation.select{|r| r.return_date < Date.today &&
+      Kit.find(r.kit_id).items.first.item_category.id == @item_category.id}
   end
 
   # GET /item_categories/new
@@ -26,6 +29,9 @@ class ItemCategoriesController < ApplicationController
   # GET /item_categories/1/edit
   def edit
     authorize! :edit, @item_category
+  end
+
+  def rental_history
   end
 
   # POST /item_categories
