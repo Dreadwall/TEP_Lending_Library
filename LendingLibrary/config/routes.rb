@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get 'about' => 'home#about', as: :about
   get 'contact' => 'home#contact', as: :contact
   get 'privacy' => 'home#privacy', as: :privacy
+  get 'report' => 'home#report', as: :report
   # get 'home/upload_users'
   get 'upload_users' => 'home#upload_users', as: :upload_users
   post 'create_users' => 'home#create_users', as: :create_users

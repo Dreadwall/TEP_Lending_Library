@@ -14,6 +14,12 @@ class ItemCategoriesController < ApplicationController
   # GET /item_categories/1.json
   def show
     authorize! :show, @item_category
+    @item = @item_category.items.first
+    @components = @item_category.items.first.components
+    @kits = Kit.visible_kits.select{|k| k.items.first.item_category.id == @item_category.id}.count
+    # TODO: item for reservation scope in reservation model?
+    @reservations = Reservation.select{|r| r.return_date < Date.today &&
+      Kit.find(r.kit_id).items.first.item_category.id == @item_category.id}
   end
 
   # GET /item_categories/new
@@ -25,6 +31,9 @@ class ItemCategoriesController < ApplicationController
   # GET /item_categories/1/edit
   def edit
     authorize! :edit, @item_category
+  end
+
+  def rental_history
   end
 
   # POST /item_categories

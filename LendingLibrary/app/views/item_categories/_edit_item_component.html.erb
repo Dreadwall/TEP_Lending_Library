@@ -1,0 +1,47 @@
+<div class="reveal" id="edit_item_component" data-reveal>
+
+  <div class="cell-block-y">
+    <div class="grid-container">
+
+      <div class="grid-x">
+        <div class="inner-title cell-block-x small-12">
+          <span class="uline"><h3><%= @item_category.name + " Kit Content" %></h3> </span>
+        </div>
+      </div>
+
+          <div class="information-table">
+            <table>
+              <thead>
+                <tr id="table-head">
+                  <th>Item in Kit</th>
+                  <th>Amount</th>
+                  <th colspan="1"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @components.each do |component| %>
+                  <tr>
+                    <td><%= component.component_category.name %></td>
+                    <td><%= component.max_quantity %></td>
+                    <td><%= link_to 'Remove', component, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+    </div>
+  </div>
+
+  <div class="grid-x">
+    <div class="small-5 cell small-offset-4">
+      <%= link_to 'ADD CONTENT', edit_item_path(@item), :class => 'button success radius' %>
+      <%= link_to 'CANCEL EDITS', item_category_path(@item_category.id), :class => 'button radius' %>
+    </div>
+  </div>
+
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+</div>
