@@ -14,6 +14,7 @@ class ItemCategoriesController < ApplicationController
   # GET /item_categories/1.json
   def show
     authorize! :show, @item_category
+    @kits_count = Item.available_for_kits.select{|i| i.item_category.id == @item_category.id}.count
   end
 
   # GET /item_categories/new

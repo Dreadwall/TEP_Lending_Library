@@ -48,7 +48,8 @@ osmo46,Good,46,1,true
 osmo47,Good,47,1,true
 osmo48,Good,48,1,true
 osmo49,Good,49,1,true
-osmo50,Good,50,1,true
-finch1,Good,2,2,true
-hummingbird1,Good,3,3,true
+osmo50,Broken,50,1,true
+finch1,Good,51,2,true
+hummingbird1,Good,52,3,true
+hummingbird2,Good,52,3,true
 lego1,Good,4,4,true

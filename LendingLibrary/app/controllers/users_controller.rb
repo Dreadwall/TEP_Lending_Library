@@ -43,7 +43,6 @@ class UsersController < ApplicationController
   # GET /users/1/rental_history
   def rental_history
     @reservations = @user.owned_reservations
-    puts @reservations.to_s
   end
 
   def reservation_user_edit
