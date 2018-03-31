@@ -6,7 +6,7 @@
     <h4>Description</h4> <%= f.input :description, :input_html => {:style => "height: 200px;"}, as: :text %>
 
     <div class="form-actions">
-      <%= link_to 'CANCEL EDITS', item_category_path(@item_category.id), :class => 'button radius' %>
+      <%= link_to 'CANCEL EDITS', item_category_path(@item_category), :class => 'button radius' %>
       <%= f.submit 'SAVE CHANGES', :class => 'button success radius' %>
     </div>
   </fieldset>
