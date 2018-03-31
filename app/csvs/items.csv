@@ -3,6 +3,7 @@ osmo1,Good,1,1,true
 osmo2,Good,1,1,true
 osmo3,Good,1,1,true
 osmo4,Good,1,1,true
+osmo50,Broken,1,1,true
 osmo5,Good,2,1,true
 osmo6,Good,2,1,true
 osmo7,Good,2,1,true
@@ -21,7 +22,6 @@ osmo19,Good,3,1,true
 osmo20,Good,3,1,true
 osmo21,Good,3,1,true
 osmo22,Good,3,1,true
-osmo50,Broken,1,1,true
 finch1,Good,4,2,true
 hummingbird1,Good,5,3,true
 hummingbird2,Good,5,3,true

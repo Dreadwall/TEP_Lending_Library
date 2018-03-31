@@ -17,7 +17,13 @@
     <div class="cell small-6">
       <%= render :partial => "item_details" %>
       <div class="form-actions">
-        <%= link_to 'RENT THIS KIT', new_reservation_path(:item_category => @item_category.id, :step => 1), :class => 'button radius' %>
+
+        <% if @kits_count <= 0 %>
+          <%= render :partial => "not_available" %>
+          <a data-open="item_not_available"><div class="button radius">RENT THIS KIT</div></a>
+        <% else %>
+          <%= link_to 'RENT THIS KIT', new_reservation_path(:item_category => @item_category.id, :step => 1), :class => 'button radius' %>
+        <% end %>
 
         <!-- TODO: add cancan -->
         <%= link_to 'EDIT THIS KIT', edit_item_category_path(@item_category), :class => 'button radius' %>

@@ -7,6 +7,21 @@ class Kit < ApplicationRecord
 
     scope :visible_kits,     -> { where(blackout: false, is_active: true, reserved: false) }
 
+    def self.set_reserved
+      @reserved_kits = Reservation.open_reservations.map{|r| r.kit}
+      puts " ************ ************ ************ ************ ************ "
+      puts " ************ ************ ************ ************ ************ "
+      puts "kit model: " + @reserved_kits.map{|k| k.id}.to_s
+      @reserved_kits.map{|kit| kit.reserved = true
+                        kit.save!}
+    end
+
+    def self.free_reserved
+      @reserved_kits = Reservation.open_reservations.map{|r| r.kit}
+      @free_kits = Kit.all - @reserved_kits
+      @free_kits.map{|kit| kit.reserved = false
+                        kit.save!}
+    end
 
     def self.available_for_item_category(item_cat)
         kits = Kit.available_kits
