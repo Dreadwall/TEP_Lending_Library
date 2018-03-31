@@ -19,4 +19,5 @@ class ItemCategory < ApplicationRecord
     end
 
 
+
 end

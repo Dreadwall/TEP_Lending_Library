@@ -1,7 +1,8 @@
-<%= simple_form_for @item_category, :html => { :class => 'form-horizontal' }, :defaults => {:label => false} do |f| %>
+<%= simple_form_for @item_category, :html => { :class => 'form-horizontal' }, :defaults => {:label => false}, :local => true, :multipart => true do |f| %>
   <fieldset>
     <h4>Kit Name </h4><%= f.input :name %>
-    <h4>Kit Photo</h4> <%= f.file_field :photo %>
+    <h4>Kit Photo</h4> <%= f.file_field :item_photo %>
+
     <h4>Description</h4> <%= f.input :description, :input_html => {:style => "height: 200px;"}, as: :text %>
 
     <div class="form-actions">

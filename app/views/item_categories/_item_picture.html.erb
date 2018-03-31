@@ -1,3 +1,17 @@
-<div class="item-pic">
-  <%= image_tag('osmo.png', width:250, height:250) %>
+<div id="item-pic">
+  <% if @item_category.nil? && ItemCategory.find(item_category).nil? %>
+      <%= image_tag("not_found.jpg", width: "50%", height: "40%") %>
+  <% elsif ItemCategory.find(item_category).nil? %>
+    <% unless @item_category.item_photo_url.nil? %>
+      <p><%= link_to image_tag(@item_category.item_photo_url) %></p>
+    <% else %>
+      <%= image_tag("not_found.jpg", width: "50%", height: "40%") %>
+    <% end %>
+  <% else %>
+    <% unless ItemCategory.find(item_category).item_photo_url.nil? %>
+      <p><%= link_to image_tag(ItemCategory.find(item_category).item_photo_url) %></p>
+    <% else %>
+      <%= image_tag("not_found.jpg", width: "50%", height: "40%") %>
+    <% end %>
+  <% end %>
 </div>

@@ -1,7 +1,7 @@
 class ItemPhotoUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -22,11 +22,21 @@ class ItemPhotoUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process scale: [200, 300]
+  # process scale: [240, 240]
   #
   # def scale(width, height)
   #   # do something
   # end
+
+  version :resized do
+    # returns an image with a maximum width of 100px
+    # while maintaining the aspect ratio
+    # 10000 is used to tell CW that the height is free
+    # and so that it will hit the 100 px width first
+    process :resize_to_fit => [240, 10000]
+  end
+
+
 
   # Create different versions of your uploaded files:
   # version :thumb do

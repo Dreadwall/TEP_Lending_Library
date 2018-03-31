@@ -3,7 +3,10 @@
 
     <div class="cell-block-container cell auto large-offset-2 medium-offset-1">
       <div class="cell-block-y small-6">
-        <%= render :partial => "item_picture", item_category: @item_category %>
+
+        <div class="item-pic">
+          <%= render :partial => "item_picture", locals: {:item_category => @item_category.id} %>
+        </div>
       </div>
       <div class="cell-block-y small-6">
         <%= render :partial => "item_components" %>

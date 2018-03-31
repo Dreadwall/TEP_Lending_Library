@@ -24,7 +24,7 @@
               <tbody>
                 <% @reservations.each do |myr| %>
                   <tr>
-                    <td><%= link_to image_tag('osmo.png', width:180, height:180), item_path(@item=Item.find(1))%></td>
+                    <td><%= render :partial => "item_categories/item_picture", locals: {:item_category => myr.kit.items.first.item_category.id} %></td>
                     <td>From: <%= myr.pick_up_date.strftime("%D") %></td>
                     <td>To: <%= myr.return_date.strftime("%D") %></td>
                     <td> <%= myr.picked_up ? "Picked Up" : "Not Yet Picked Up" %></td>
