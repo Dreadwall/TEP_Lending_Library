@@ -15,11 +15,9 @@ class ItemCategoriesController < ApplicationController
   def show
     authorize! :show, @item_category
     @item = @item_category.items.first
-    @components = @item_category.items.first.components
-    @kits_count = Kit.available_for_item_category(@item_category.id).count
-    # TODO: item for reservation scope in reservation model?
-    @reservations = Reservation.select{|r| r.return_date < Date.today &&
-      Kit.find(r.kit_id).items.first.item_category.id == @item_category.id}
+    @components = @item.components
+    @kits_count = Kit.available_for_item_category(@item_category).count
+    @reservations = Reservation.item_cat_history(@item_category)
   end
 
   # GET /item_categories/new

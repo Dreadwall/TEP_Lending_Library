@@ -36,7 +36,6 @@ gem 'validates_timeliness', '~> 4.0'
 gem 'date_validator'
 gem 'will_paginate'
 gem 'carrierwave'
-gem "mini_magick"
 gem 'cancancan'
 gem 'minitest'
 gem 'figaro'

@@ -1,15 +1,15 @@
 <div id="item-pic">
-  <% if @item_category.nil? && ItemCategory.find(item_category).nil? %>
+  <% if @item_category.nil? && item_category.nil? %>
       <%= image_tag("not_found.jpg", width: "50%", height: "40%") %>
-  <% elsif ItemCategory.find(item_category).nil? %>
+  <% elsif item_category.nil? %>
     <% unless @item_category.item_photo_url.nil? %>
       <p><%= link_to image_tag(@item_category.item_photo_url) %></p>
     <% else %>
       <%= image_tag("not_found.jpg", width: "50%", height: "40%") %>
     <% end %>
   <% else %>
-    <% unless ItemCategory.find(item_category).item_photo_url.nil? %>
-      <p><%= link_to image_tag(ItemCategory.find(item_category).item_photo_url) %></p>
+    <% unless item_category.item_photo_url.nil? %>
+      <p><%= link_to image_tag(item_category.item_photo_url) %></p>
     <% else %>
       <%= image_tag("not_found.jpg", width: "50%", height: "40%") %>
     <% end %>

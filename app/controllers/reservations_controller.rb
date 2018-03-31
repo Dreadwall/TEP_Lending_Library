@@ -82,7 +82,7 @@ class ReservationsController < ApplicationController
     unless @step.nil?
       @item_category = ItemCategory.find(params[:item_category])
       # get available kits for this particular item_category
-      @kits = Kit.available_for_item_category(@item_category.id)
+      @kits = Kit.available_for_item_category(@item_category)
       @kit = @kits.first
 
       @reservation.kit_id = @kit.id

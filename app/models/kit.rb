@@ -9,9 +9,6 @@ class Kit < ApplicationRecord
 
     def self.set_reserved
       @reserved_kits = Reservation.open_reservations.map{|r| r.kit}
-      puts " ************ ************ ************ ************ ************ "
-      puts " ************ ************ ************ ************ ************ "
-      puts "kit model: " + @reserved_kits.map{|k| k.id}.to_s
       @reserved_kits.map{|kit| kit.reserved = true
                         kit.save!}
     end
@@ -25,7 +22,7 @@ class Kit < ApplicationRecord
 
     def self.available_for_item_category(item_cat)
         kits = Kit.available_kits
-        for_ic = kits.select{|k| k.items.first.item_category.id == item_cat}
+        for_ic = kits.select{|k| k.items.first.item_category.id == item_cat.id}
     end
 
     def self.available_kits

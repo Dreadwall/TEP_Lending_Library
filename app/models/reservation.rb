@@ -17,7 +17,7 @@ class Reservation < ApplicationRecord
     validate :available_kit, on: :create
     validate :cant_return_before_pickup
     validate :release_form_signed
-    
+
 
     belongs_to :kit
     belongs_to :teacher,   :class_name => 'User'
@@ -31,6 +31,11 @@ class Reservation < ApplicationRecord
 
     def past_due?
         Date.current > self.end_date && self.returned == false
+    end
+
+    def self.item_cat_history(item_cat)
+      Reservation.select{|r| r.return_date < Date.today &&
+      Kit.find(r.kit_id).items.first.item_category.id == item_cat.id}
     end
 
     private

@@ -4,7 +4,7 @@
   <div class="grid-x grid-padding-x small-up-2 medium-up-3">
         <div class="product-card">
           <div class="product-card-thumbnail center">
-            <%= render :partial => "item_categories/item_picture", locals: {:item_category => @item_category.id} %>
+            <%= render :partial => "item_categories/item_picture", locals: {:item_category => @item_category} %>
           </div>
             <h2 class="product-card-title center"><%= @item_category.name %></h2>
         </div>
