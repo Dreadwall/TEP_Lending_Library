@@ -2,7 +2,6 @@
   <fieldset>
     <h4>Kit Name </h4><%= f.input :name %>
     <h4>Kit Photo</h4> <%= f.file_field :photo %>
-    <h4>Total Amount of Kits Available </h4><%= f.input :amount_available %>
     <h4>Description</h4> <%= f.input :description, :input_html => {:style => "height: 200px;"}, as: :text %>
 
     <div class="form-actions">
