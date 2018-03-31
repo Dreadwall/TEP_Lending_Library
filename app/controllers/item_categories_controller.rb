@@ -16,7 +16,7 @@ class ItemCategoriesController < ApplicationController
     authorize! :show, @item_category
     @item = @item_category.items.first
     @components = @item_category.items.first.components
-    @kits_count = Kit.available_kits.visible_kits.select{|k| k.items.first.item_category.id == @item_category.id}.count
+    @kits_count = Kit.available_kits.select{|k| k.items.first.item_category.id == @item_category.id}.count
     # TODO: item for reservation scope in reservation model?
     @reservations = Reservation.select{|r| r.return_date < Date.today &&
       Kit.find(r.kit_id).items.first.item_category.id == @item_category.id}
