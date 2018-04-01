@@ -81,9 +81,7 @@ class ReservationsController < ApplicationController
 
     unless @step.nil?
       @item_category = ItemCategory.find(params[:item_category])
-      # get available kits for this particular item_category
-      @kits = Kit.available_for_item_category(@item_category)
-      @kit = @kits.first
+      @kit = Kit.available_for_item_category(@item_category).first
 
       @reservation.kit_id = @kit.id
       @reservation.teacher_id = @user.id
@@ -111,7 +109,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     respond_to do |format|
       if @reservation.save
-        Kit.set_reserved
+        @reservation.kit.set_reserved
         format.html { redirect_to rental_history_path(current_user), notice: 'Thank you for supporting the STEAM Kit rental program.' }
         format.json { render :show, status: :created, location: @reservation }
       else
@@ -142,7 +140,7 @@ class ReservationsController < ApplicationController
   def destroy
     @reservation.destroy
     respond_to do |format|
-      Kit.free_reserved
+      @reservation.kit.free_reserved
       format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
       format.json { head :no_content }
     end

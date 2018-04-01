@@ -35,7 +35,7 @@ class Reservation < ApplicationRecord
 
     def self.item_cat_history(item_cat)
       Reservation.select{|r| r.return_date < Date.today &&
-      Kit.find(r.kit_id).items.first.item_category.id == item_cat.id}
+      r.kit.items.first.item_category.id == item_cat.id}
     end
 
     private
