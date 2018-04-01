@@ -1,7 +1,7 @@
-  <div class="grid-x grid-margin-x">
-    <div class='cell auto'>
-      <%= simple_form_for @item, :html => { :class => 'form-inline' }, defaults: {label: false} do |f| %>
-      <fieldset>
+  <div class="grid-x">
+
+      <div class='cell small-6'>
+        <%= simple_form_for @item, defaults: {label: false} do |f| %>
         <table>
           <thead>
             <tr>
@@ -13,43 +13,61 @@
               </td>
             </tr>
             <tr>
-              <th> Total Amount of Kits Available </th>
-              <td>
-                <%= f.simple_fields_for @item.item_category do |g| %>
-                  <%= g.input :inventory_level, :input_html => { :class => 'avg', :style => "width: 200px;"} %>
-                <% end %>
-              </td>
-            </tr>
-
-            <tr>
-              <th> Active </th>
-              <td>
-                <%= f.input :is_active, as: :boolean %>
-              </td>
-            </tr>
 
             <tr>
               <th> Description </th>
               <td>
                 <%= f.simple_fields_for @item.item_category do |g| %>
-                  <%= g.text_field :description, :input_html => { :class => 'avg', :style => "width: 200px;" }%>
+                  <%= g.input :description, :input_html => { :class => 'avg', :style => "height: 200px;" }, as: :text%>
                 <% end %>
               </td>
             </tr>
 
           </thead>
         </table>
-      </fieldset>
-    </div>
+
+          <div class="cell form-actions large-offset-10">
+            <%= link_to 'CANCEL EDITS',  item_category_path(@item.item_category), :class => 'button info radius' %>
+            <%= f.button :submit, "SAVE CHANGES", :class => 'button radius' %>
+            <!-- TODO: add views and path for adding new components to item -->
+            <%= link_to "ADD PARTS TO ITEM", :class => 'button success radius' %>
+          </div>
+
+        <% end %>
+
+      </div>
+
+
+      <div class="cell small-6 right">
+
+                  <div class="information-table">
+                    <table>
+                      <thead>
+                        <tr id="table-head">
+                          <th>Item in Kit</th>
+                          <th>Amount</th>
+                          <th colspan="1"></th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <% @components.each do |component| %>
+                          <tr>
+                            <td><%= component.component_category.name %></td>
+                            <td><%= component.max_quantity %></td>
+                            <td><%= link_to 'Remove', component, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+
+        </div>
+
+
   </div>
 
-  <div class="grid-x grid-margin-x">
-    <div class="cell form-actions">
-      <%= f.button :submit, "SAVE CHANGES", :class => 'button radius' %>
-      <%= link_to 'CANCEL EDITS', items_path, :class => 'button alert radius' %>
-    </div>
 
-  </div>
-  <br>
-  <% end %>
+
+
 </div>

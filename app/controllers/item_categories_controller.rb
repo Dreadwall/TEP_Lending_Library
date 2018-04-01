@@ -14,6 +14,10 @@ class ItemCategoriesController < ApplicationController
   # GET /item_categories/1.json
   def show
     authorize! :show, @item_category
+    @item = @item_category.items.first
+    @components = @item.components
+    @kits_count = Kit.available_for_item_category(@item_category).count
+    @reservations = Reservation.item_cat_history(@item_category).paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /item_categories/new
@@ -25,6 +29,9 @@ class ItemCategoriesController < ApplicationController
   # GET /item_categories/1/edit
   def edit
     authorize! :edit, @item_category
+  end
+
+  def rental_history
   end
 
   # POST /item_categories

@@ -1,0 +1,45 @@
+<div class="reveal" id="item_history" data-reveal>
+
+  <div class="cell-block-y">
+    <div class="grid-container">
+
+      <div class="grid-x">
+        <div class="inner-title cell-block-x small-12">
+          <span class="uline"><h3><%= @item_category.name + " Rental History" %></h3> </span>
+        </div>
+      </div>
+
+      <% if @reservations.count > 0 %>
+          <div class="information-table">
+            <table>
+              <thead>
+                <tr id="table-head">
+                  <th>Teacher</th>
+                  <th>Pickup</th>
+                  <th>Dropoff</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @reservations.each do |res| %>
+                  <tr>
+                    <td><%= res.teacher.name %></td>
+                    <td><%= res.pick_up_date %></td>
+                    <td><%= res.return_date %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+      <% else %>
+        <h4> This item hasn't been rented. </h4>
+      <% end %>
+    </div>
+  </div>
+
+<% will_paginate @reservations %>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+</div>

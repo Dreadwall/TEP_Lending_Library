@@ -81,13 +81,7 @@ class ReservationsController < ApplicationController
 
     unless @step.nil?
       @item_category = ItemCategory.find(params[:item_category])
-      # sample a random item of the picked item category
-      @item = @item_category.items.sample(1).first
-      # get available kits for this particular item
-      @kits = Kit.available_kits
-      # generate a random kit based on available kits
-      offset2 = rand(@kits.count)
-      @kit = @kits.at(offset2)
+      @kit = Kit.available_for_item_category(@item_category).first
 
       @reservation.kit_id = @kit.id
       @reservation.teacher_id = @user.id
@@ -100,8 +94,8 @@ class ReservationsController < ApplicationController
       @reservation.end_date = Date.today.end_of_month.next_month
       @reservation.pick_up_date = params['pick_up_date']
       @reservation.return_date = params['return_date']
-    end
 
+    end
   end
 
   # GET /reservations/1/edit
@@ -115,6 +109,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     respond_to do |format|
       if @reservation.save
+        @reservation.kit.set_reserved
         format.html { redirect_to rental_history_path(current_user), notice: 'Thank you for supporting the STEAM Kit rental program.' }
         format.json { render :show, status: :created, location: @reservation }
       else
@@ -145,6 +140,7 @@ class ReservationsController < ApplicationController
   def destroy
     @reservation.destroy
     respond_to do |format|
+      @reservation.kit.free_reserved
       format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
       format.json { head :no_content }
     end
