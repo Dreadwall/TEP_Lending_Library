@@ -4,7 +4,7 @@
   <div class="grid-x grid-padding-x small-up-2 medium-up-3">
         <div class="product-card">
           <div class="product-card-thumbnail center">
-            <%= link_to image_tag('osmo.png', width:180, height:180), item_path(@item=Item.find(1))%>
+            <%= render :partial => "item_categories/item_picture", locals: {:item_category => @item_category} %>
           </div>
             <h2 class="product-card-title center"><%= @item_category.name %></h2>
         </div>

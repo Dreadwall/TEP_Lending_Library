@@ -24,6 +24,8 @@ class ItemsController < ApplicationController
   # GET /items/1/edit
   def edit
     authorize! :edit, @item
+    @components = @item.components
+    @item_category = @item.item_category
   end
 
   def item_components
@@ -81,6 +83,6 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:readable_id, :condition, :kit_id, :item_category_id, :is_active)
+      params.require(:item).permit(:readable_id, :condition, :kit_id, :item_category_id, :is_active, :resize_to_fit)
     end
 end

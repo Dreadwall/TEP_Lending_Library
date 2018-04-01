@@ -1,8 +1,31 @@
 
-<div class="row">
+<h1>Kits</h1>
 
+<table>
+  <thead>
+    <tr>
+      <th>Location</th>
+      <th>Is active</th>
+      <th>Blackout</th>
+      <th>Reserved</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
 
-  <div class="form-actions">
-    <%= link_to 'RENT THIS KIT', kit_path(@kit), :class => 'button radius' %>
-  </div>
-</div>
+  <tbody>
+      <tr>
+        <td><%= @kit.location %></td>
+        <td><%= @kit.is_active %></td>
+        <td><%= @kit.blackout %></td>
+        <td><%= @kit.reserved %></td>
+
+        <td><%= link_to 'Edit', edit_kit_path(@kit) %></td>
+        <td><%= link_to 'Destroy', @kit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Kit', new_kit_path %>

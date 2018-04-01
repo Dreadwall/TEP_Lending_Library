@@ -22,11 +22,12 @@ class ItemPhotoUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process scale: [200, 300]
+  # process scale: [240, 240]
   #
   # def scale(width, height)
   #   # do something
   # end
+
 
   # Create different versions of your uploaded files:
   # version :thumb do

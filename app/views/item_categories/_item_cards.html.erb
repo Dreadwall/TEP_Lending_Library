@@ -15,15 +15,15 @@
 
     <div class="cell-block-y">
       <div class="grid-x grid-margin-x large-4 medium-2 small-1" id="card-grid">
-        <% @item_categories.each do |ic| %>
+        <% @item_categories.each do |item_category| %>
         <div class="product-card-container cell-block-x">
           <div class="product-card">
             <div class="product-card-thumbnail">
-              <%= link_to image_tag('finch.jpg', width:260, height:260), item_category_path(ic)%>
+              <%= render :partial => "item_picture", locals: {:item_category => item_category} %>
             </div>
-            <h2 class="product-card-title center"><%= ic.name %></h2>
+            <h2 class="product-card-title center"><%= item_category.name %></h2>
             <div class="product-card-button center">
-              <%= link_to 'Details', item_category_path(ic) %>
+              <%= link_to 'Details', item_category_path(item_category) %>
             </div>
           </div>
         </div>

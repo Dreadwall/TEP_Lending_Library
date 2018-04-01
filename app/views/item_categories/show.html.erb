@@ -3,22 +3,33 @@
 
     <div class="cell-block-container cell auto large-offset-2 medium-offset-1">
       <div class="cell-block-y small-6">
-        <%= render :partial => "item_picture", item_category: @item_category %>
+        <%= render :partial => "item_picture", locals: {:item_category => @item_category} %>
       </div>
       <div class="cell-block-y small-6">
         <%= render :partial => "item_components" %>
         <!-- TODO: add cancan -->
-        <%= link_to 'EDIT KIT CONTENT', edit_item_category_path(@item_category), :class => 'button radius' %>
+
+        <%= render :partial => 'edit_item_component' %>
+        <a data-open="edit_item_component"><div class="button radius">EDIT KIT CONTENT</div></a>
+
       </div>
     </div>
     <div class="cell small-6">
       <%= render :partial => "item_details" %>
       <div class="form-actions">
-        <%= link_to 'RENT THIS KIT', new_reservation_path(:item_category => @item_category.id, :step => 1), :class => 'button radius' %>
+
+        <% if @kits_count <= 0 %>
+          <%= render :partial => "not_available" %>
+          <a data-open="item_not_available"><div class="button radius">RENT THIS KIT</div></a>
+        <% else %>
+          <%= link_to 'RENT THIS KIT', new_reservation_path(:item_category => @item_category.id, :step => 1), :class => 'button radius' %>
+        <% end %>
 
         <!-- TODO: add cancan -->
         <%= link_to 'EDIT THIS KIT', edit_item_category_path(@item_category), :class => 'button radius' %>
-        <%= link_to 'SEE RENTAL HISTORY', edit_reservation_path(), :class => 'button radius' %>
+
+        <%= render :partial => 'item_history' %>
+        <a data-open="item_history"><div class="button radius">SEE RENTAL HISTORY</div></a>
 
       </div>
     </div>

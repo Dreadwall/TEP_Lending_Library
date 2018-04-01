@@ -6,6 +6,7 @@
       <th>Location</th>
       <th>Is active</th>
       <th>Blackout</th>
+      <th>Reserved</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
         <td><%= kit.location %></td>
         <td><%= kit.is_active %></td>
         <td><%= kit.blackout %></td>
+        <td><%= kit.reserved %></td>
         <td><%= link_to 'Show', kit %></td>
         <td><%= link_to 'Edit', edit_kit_path(kit) %></td>
         <td><%= link_to 'Destroy', kit, method: :delete, data: { confirm: 'Are you sure?' } %></td>

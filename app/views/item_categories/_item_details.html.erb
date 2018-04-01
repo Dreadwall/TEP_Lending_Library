@@ -3,7 +3,7 @@
 </div>
 <div class="item-detail-description">
   <div id="kit-count">
-    <p><%= pluralize(@item_category.inventory_level, 'kit')%> available</p>
+    <p><%= pluralize(@kits_count, 'kit')%> available</p>
   </div>
   <div id="kit-description">
     <p><%= @item_category.description %></p>

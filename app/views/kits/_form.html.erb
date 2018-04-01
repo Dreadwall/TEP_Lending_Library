@@ -1,12 +1,15 @@
-<%= simple_form_for @item_category, :html => { :class => 'form-horizontal' } do |f| %>
+<%= simple_form_for @kit, :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
-    <legend><%= controller.action_name.capitalize %> Item Category</legend>
+    <legend><%= controller.action_name.capitalize %> Kit </legend>
 
     <%= f.input :location %>
+    <%= f.input :is_active, as: :boolean %>
+    <%= f.input :blackout, as: :boolean %>
+    <%= f.input :reserved, as: :boolean %>
 
     <div class="form-actions">
       <%= f.submit nil, :class => 'button radius' %>
-      <%= link_to 'Cancel', assignments_path, :class => 'button alert radius' %>
+      <%= link_to 'Cancel', kits_path, :class => 'button alert radius' %>
     </div>
   </fieldset>
 
