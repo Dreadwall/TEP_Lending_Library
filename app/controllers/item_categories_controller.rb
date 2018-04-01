@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class ItemCategoriesController < ApplicationController
   before_action :set_item_category, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
@@ -17,7 +19,7 @@ class ItemCategoriesController < ApplicationController
     @item = @item_category.items.first
     @components = @item.components
     @kits_count = Kit.available_for_item_category(@item_category).count
-    @reservations = Reservation.item_cat_history(@item_category)
+    @reservations = Reservation.item_cat_history(@item_category).paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /item_categories/new
