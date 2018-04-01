@@ -47,7 +47,6 @@
               <%= f.input :return_date, :value => @reservation.return_date, as: :hidden %>
               <%= f.input :teacher_id, :value => current_user, as: :hidden %>
               <%= f.input :kit_id, :value => @reservation.kit.id, as: :hidden %>
-              <!-- <%= f.input :release_form_id, :value => @reservation.release_form_id, as: :hidden %> -->
 
 
           <%= f.submit "Confirm rental",  :class => 'button radius success' %>
