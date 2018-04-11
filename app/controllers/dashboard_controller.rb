@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+  authorize_resource :class => false
 
   def dashboard
     @kits_rented = Reservation.kit_history
@@ -9,5 +10,5 @@ class DashboardController < ApplicationController
     @employees = User.active.employees
     @damaged_kits = Kit.damaged
   end
-  
+
 end

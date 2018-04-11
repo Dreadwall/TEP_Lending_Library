@@ -4,6 +4,7 @@ require 'tempfile'
 class HomeController < ApplicationController
   layout 'home'
   before_action :authenticate_user!, only: [:upload_users, :create_users]
+  authorize_resource :class => false
 
   def home
   end
@@ -21,12 +22,10 @@ class HomeController < ApplicationController
   end
 
   def upload_users
-  	authorize! :upload_users, nil
   end
 
 
   def create_users
-  	authorize! :create_users, nil
 
   	failed_emails = Array.new
   	file = params['create_users']['users_csv'].tempfile
@@ -69,12 +68,10 @@ class HomeController < ApplicationController
   end
 
   def upload_schools
-  	authorize! :upload_schools, nil
   end
 
 
   def create_schools
-  	authorize! :create_schools, nil
 
   	failed_schools = Array.new
   	file = params['create_schools']['schools_csv'].tempfile
@@ -104,11 +101,9 @@ class HomeController < ApplicationController
   end
 
   def reports
-  	authorize! :reports, nil
   end
 
   def gen_reports
-  	authorize! :gen_reports, nil
 
   	@one = params["gen_reports"]["input_1"]
   	@two = params["gen_reports"]["input_2"]
