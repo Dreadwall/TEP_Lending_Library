@@ -12,13 +12,14 @@ class Ability
     if user.has_role? :admin
         can :manage, :all
     elsif user.has_role? :manager
-        can :crud, ComponentCategory
         can :crud, Component
         can :crud, Kit
         can :crud, ItemCategory
         can :crud, Item
         #can :crud, Report
         can :steamkits, ItemCategory
+
+        can :confirm_user, Reservation
         can :read, Reservation
         can :show, Reservation
         can :create, Reservation
