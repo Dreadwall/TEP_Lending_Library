@@ -133,7 +133,7 @@ class User < ApplicationRecord
 
   def trim_spaces
     phone = self.phone_num.to_s # change to string in case input as all numbers
-    phone.strip # strip leading and trailing spaces
+    phone = phone.strip # strip leading and trailing spaces
     self.phone_num = phone # reset self.phone to new string
   end
 
