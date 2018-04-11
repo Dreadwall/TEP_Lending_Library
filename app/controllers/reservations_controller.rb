@@ -42,10 +42,50 @@ class ReservationsController < ApplicationController
     @today_pickup = Reservation.picking_up_today
   end
 
+  # GET /choose_dates
   def choose_dates
     if(session[:rental_category_id].nil?)
       redirect_to shopping_path
     end
+
+    @start_date = Date.today.next_month.beginning_of_month
+    @end_date = Date.today.next_month.end_of_month
+
+    # pick_up_dates is the first full week of next month starting from the first weekday
+    @pick_up_dates = []
+    # return_dates is the last full week of next month ending on the last weekday
+    @return_dates = []
+
+
+    # pick_up_dates
+    @pick_up_start_date = @start_date
+    @pick_up_start_date += 1.days until @pick_up_start_date.wday.in?([1,2,3,4,5]) # wday 1 is monday, etc.
+    @starting_day = @pick_up_start_date
+    @pick_up_dates.push(@pick_up_start_date)
+    @pick_up_start_date += 1.days
+
+    while @pick_up_start_date.wday != @starting_day.wday
+      if @pick_up_start_date.wday.in?([1,2,3,4,5])
+        @pick_up_dates.push(@pick_up_start_date)
+      end
+      @pick_up_start_date += 1.days
+    end
+
+    # return dates
+    @return_end_date = @end_date
+    @return_end_date -= 1.days until @return_end_date.wday.in?([1,2,3,4,5]) # wday 1 is monday, etc.
+    @ending_day = @return_end_date
+    @return_dates.push(@return_end_date)
+    @return_end_date -= 1.days
+
+    while @return_end_date.wday != @ending_day.wday
+      if @return_end_date.wday.in?([1,2,3,4,5])
+        @return_dates.push(@return_end_date)
+      end
+      @return_end_date -= 1.days
+    end
+
+    @return_dates = @return_dates.sort_by {|d| d.strftime('%d')}
   end
 
   def picked_up
@@ -92,8 +132,8 @@ class ReservationsController < ApplicationController
       redirect_to shopping_path
     end
 
-    @start_date = Date.today.beginning_of_month.next_month
-    @end_date = Date.today.end_of_month.next_month
+    @start_date = Date.today.next_month.beginning_of_month
+    @end_date = Date.today.next_month.end_of_month
 
     @pickup_date = (params[:reservation_select_dates][:pick_up_date]).to_date
     @return_date = (params[:reservation_select_dates][:return_date]).to_date
