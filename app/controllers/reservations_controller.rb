@@ -53,15 +53,13 @@ class ReservationsController < ApplicationController
 
     # pick_up_dates is the first full week of next month starting from the first weekday
     @pick_up_start_date = @start_date
-    @pick_up_start_date += 1.days until @pick_up_start_date.wday.in?([1,2,3,4,5]) # wday 1 is monday, etc.
-    @pick_up_date_range = @pick_up_start_date..(@pick_up_start_date + 6.days)
-    @pick_up_dates = @pick_up_date_range.select{|d| d.wday.in?([1,2,3,4,5])}
+    @pick_up_start_date += 1.days until @pick_up_start_date.wday == 1 # wday 1 is monday, etc.
+    @pick_up_dates = @pick_up_start_date..(@pick_up_start_date + 5.days)
 
     # return_dates is the last full week of next month ending on the last weekday
     @return_end_date = @end_date
-    @return_end_date -= 1.days until @return_end_date.wday.in?([1,2,3,4,5]) # wday 1 is monday, etc.
-    @return_date_range = (@return_end_date - 6.days)..@return_end_date
-    @return_dates = @return_date_range.select{|d| d.wday.in?([1,2,3,4,5])}
+    @return_end_date -= 1.days until @return_end_date.wday == 5 # wday 1 is monday, etc.
+    @return_dates = (@return_end_date - 5.days)..@return_end_date
 
   end
 
