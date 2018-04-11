@@ -41,11 +41,12 @@ class HomeController < ApplicationController
 			@user.password = generated_password
 			@user.password_confirmation = generated_password
 			@user.phone_num = row['phone_num']
+      @user.phone_ext = row['phone_ext']
 			@user.class_size = row['class_size']
 
       # Get school id by school name
-    
-      unless row['school'].nil? && School.by_name(row['school']).first.nil?
+
+      unless row['school'].nil? || School.by_name(row['school']).first.nil?
         @school = School.by_name(row['school']).first
   			@user.school_id = @school.id
       end

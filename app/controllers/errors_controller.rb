@@ -1,7 +1,7 @@
 class ErrorsController < ApplicationController
-  
+
   #https://mattbrictson.com/dynamic-rails-error-pages
-  
+
   def not_found
     render(:status => 404)
   end
@@ -13,12 +13,12 @@ class ErrorsController < ApplicationController
   def access_denied
     render(:status => 403)
   end
-  
+
   def routing
     unless params[:a].nil?
       logger.info "500 Error with: '#{params[:a]}'"
     end
     render(:status => 404)
   end
-  
+
 end
