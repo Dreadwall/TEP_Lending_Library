@@ -2,7 +2,6 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    # alias_action :index, :show, to: :read
     alias_action :create, :read, :update, :destroy, to: :crud
     alias_action :confirm_user_details, :edit_user_details, :submit_user_details, to: :confirm_user
 
@@ -17,7 +16,7 @@ class Ability
         can :crud, Kit
         can :crud, ItemCategory
         can :crud, Item
-        # can :crud, Report
+        #can :crud, Report
         can :steamkits, ItemCategory
 
         can :confirm_user, Reservation
@@ -31,23 +30,12 @@ class Ability
           r.teacher_id == user.id
         end
 
-        # manager could view dashboard
-        can :manage, :dashboard
-        # manager could read everything and authroized to access quick links
-        can :read, :all
-        # manager could access all the home controller actions
-        can :manage, :home
 
         can :crud, School
 
-        # manager could view other users
+
         can :read, User
         can :show, User
-
-        # manager could change their own info
-        can :crud, User do |u|
-          u.id == user.id
-        end
 
         can :returns, Reservation
         can :pickup, Reservation
