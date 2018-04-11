@@ -12,7 +12,7 @@ class User < ApplicationRecord
     validates_presence_of :role
     validates :first_name, format: {with: /\A[A-z\s]+\z/, message: "Should be a valid name"}
     validates_presence_of :school_id, :allow_blank => true
-    validates :phone_num, format: { with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only" }, :allow_blank => true
+    validates :phone_num, format: { with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-. ]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only" }, :allow_blank => true
     validates :role, inclusion: { in: %w[admin manager volunteer teacher], message: "is not a recognized role in system" }
     validates :is_active, inclusion: { in: [ true, false ] , message: "Must be true or false" }
     # remove validating class size on create
@@ -132,8 +132,8 @@ class User < ApplicationRecord
   end
 
   def trim_spaces
-    phone = sefl.phone_num.to_s # change to string in case input as all numbers
-    phone.gsub!(/\s+/, "") # strip all spaces
+    phone = self.phone_num.to_s # change to string in case input as all numbers
+    phone.strip # strip leading and trailing spaces
     self.phone_num = phone # reset self.phone to new string
   end
 
