@@ -52,40 +52,17 @@ class ReservationsController < ApplicationController
     @end_date = Date.today.next_month.end_of_month
 
     # pick_up_dates is the first full week of next month starting from the first weekday
-    @pick_up_dates = []
-    # return_dates is the last full week of next month ending on the last weekday
-    @return_dates = []
-
-
-    # pick_up_dates
     @pick_up_start_date = @start_date
     @pick_up_start_date += 1.days until @pick_up_start_date.wday.in?([1,2,3,4,5]) # wday 1 is monday, etc.
-    @starting_day = @pick_up_start_date
-    @pick_up_dates.push(@pick_up_start_date)
-    @pick_up_start_date += 1.days
+    @pick_up_date_range = @pick_up_start_date..(@pick_up_start_date + 6.days)
+    @pick_up_dates = @pick_up_date_range.select{|d| d.wday.in?([1,2,3,4,5])}
 
-    while @pick_up_start_date.wday != @starting_day.wday
-      if @pick_up_start_date.wday.in?([1,2,3,4,5])
-        @pick_up_dates.push(@pick_up_start_date)
-      end
-      @pick_up_start_date += 1.days
-    end
-
-    # return dates
+    # return_dates is the last full week of next month ending on the last weekday
     @return_end_date = @end_date
     @return_end_date -= 1.days until @return_end_date.wday.in?([1,2,3,4,5]) # wday 1 is monday, etc.
-    @ending_day = @return_end_date
-    @return_dates.push(@return_end_date)
-    @return_end_date -= 1.days
+    @return_date_range = (@return_end_date - 6.days)..@return_end_date
+    @return_dates = @return_date_range.select{|d| d.wday.in?([1,2,3,4,5])}
 
-    while @return_end_date.wday != @ending_day.wday
-      if @return_end_date.wday.in?([1,2,3,4,5])
-        @return_dates.push(@return_end_date)
-      end
-      @return_end_date -= 1.days
-    end
-
-    @return_dates = @return_dates.sort_by {|d| d.strftime('%d')}
   end
 
   def picked_up
