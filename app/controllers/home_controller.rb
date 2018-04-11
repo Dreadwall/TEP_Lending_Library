@@ -41,6 +41,7 @@ class HomeController < ApplicationController
 			@user.password = generated_password
 			@user.password_confirmation = generated_password
 			@user.phone_num = row['phone_num']
+      @user.phone_ext = row['phone_ext']
 			@user.class_size = row['class_size']
 
       # Get school id by school name

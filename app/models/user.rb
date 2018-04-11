@@ -1,12 +1,12 @@
 class User < ApplicationRecord
-#admin = User.new; admin.id = 1; admin.first_name = "Admin"; admin.last_name = "Admin"; admin.is_active = true; admin.role = "admin"; admin.email = "accounts@theeducationpartnership.org"; admin.password = "secretpassword"; admin.password_confirmation = "secretpassword"; admin.save 
+#admin = User.new; admin.id = 1; admin.first_name = "Admin"; admin.last_name = "Admin"; admin.is_active = true; admin.role = "admin"; admin.email = "accounts@theeducationpartnership.org"; admin.password = "secretpassword"; admin.password_confirmation = "secretpassword"; admin.save
 #school1 = School.new; school1.id = 1; school1.name = "Some School"; school1.street_1 = "100 Learning Way"; school1.city = "Pittsburgh"; school1.state = "PA"; school1.zip = "15213"; school1.is_active = true; school1.save
 
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable, :confirmable
-    
+
     validates_presence_of :first_name
     validates_presence_of :last_name
     validates_presence_of :role
@@ -15,24 +15,25 @@ class User < ApplicationRecord
     validates :phone_num, format: { with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only" }, :allow_blank => true
     validates :role, inclusion: { in: %w[admin manager volunteer teacher], message: "is not a recognized role in system" }
     validates :is_active, inclusion: { in: [ true, false ] , message: "Must be true or false" }
-    validate :class_size_present
+    # remove validating class size on create
+    # validate :class_size_present
     validate :valid_school
-    
+
 
     validates :email, presence: true, uniqueness: { case_sensitive: false}, format: { with: /\A[\w]([^@\s,;]+)@(([\w-]+\.)+(com|edu|org|net|gov|mil|biz|info))\z/i, message: "is not a valid format" }
     validates_confirmation_of :password, on: :create, message: "does not match"
-    validates_presence_of :encrypted_password, on: :create 
-    
+    validates_presence_of :encrypted_password, on: :create
+
     before_destroy :is_destroyable
-    
-    
+
+
 
 
     #Relationships
     belongs_to :school, optional: true
 
     has_many :owned_reservations, :class_name => 'Reservation', :foreign_key => 'teacher_id'
-   
+
     has_many :kits, through: :reservations
     has_many :items, through: :kits
 
@@ -41,7 +42,7 @@ class User < ApplicationRecord
 
 
 
-  
+
   ROLES = [['admin', :admin],['manager', :manager],['volunteer', :volunteer],['teacher',:teacher]]
 
 
@@ -84,7 +85,7 @@ class User < ApplicationRecord
 
 
  private
- 
+
  def is_destroyable
     errors.add(:id, 'Do not delete users')
     reutrn false
