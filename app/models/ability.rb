@@ -77,6 +77,9 @@ class Ability
         r.teacher_id == user.id
       end
 
+      # can make new reservation
+      can :new, Reservation
+
       can :home, :home
       can :steamkits, ItemCategory
 
