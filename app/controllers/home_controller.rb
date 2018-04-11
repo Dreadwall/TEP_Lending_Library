@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   before_action :authenticate_user!, only: [:upload_users, :create_users]
 
   def home
-    if (current_user.has_role?(:volunteer) || current_user.has_role?(:admin) || current_user.has_role?(:manager))
+    if current_user && (current_user.has_role?(:volunteer) || current_user.has_role?(:admin) || current_user.has_role?(:manager))
       redirect_to dashboard_path
     end
   end
