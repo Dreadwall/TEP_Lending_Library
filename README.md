@@ -14,14 +14,15 @@ i.e. users, schools
 bundle install
 ```
 
-setup drops existing database, import does not
+dev_setup drops existing database, which requires authorization. *only use for local development*
 
+```
+rails lendinglibrary:dev_setup
+```
+
+setup assumes database already initialized beforehand, only import fake data
 ```
 rails lendinglibrary:setup
-```
-
-```
-rails lendinglibrary:import
 ```
 
 to check if the tables are correctly populated
