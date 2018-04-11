@@ -27,7 +27,7 @@ class ReservationsController < ApplicationController
   def rental_dates
     @reservation = params[:reservation]
   end
-  
+
   # GET /returns
   def volunteer_portal
   end
@@ -41,11 +41,26 @@ class ReservationsController < ApplicationController
   def pickup
     @today_pickup = Reservation.picking_up_today
   end
-  
+
+  # GET /choose_dates
   def choose_dates
     if(session[:rental_category_id].nil?)
       redirect_to shopping_path
     end
+
+    @start_date = Date.today.next_month.beginning_of_month
+    @end_date = Date.today.next_month.end_of_month
+
+    # pick_up_dates is the first full week of next month starting from the first weekday
+    @pick_up_start_date = @start_date
+    @pick_up_start_date += 1.days until @pick_up_start_date.wday == 1 # wday 1 is monday, etc.
+    @pick_up_dates = @pick_up_start_date..(@pick_up_start_date + 5.days)
+
+    # return_dates is the last full week of next month ending on the last weekday
+    @return_end_date = @end_date
+    @return_end_date -= 1.days until @return_end_date.wday == 5 # wday 1 is monday, etc.
+    @return_dates = (@return_end_date - 5.days)..@return_end_date
+
   end
 
   def picked_up
@@ -55,8 +70,8 @@ class ReservationsController < ApplicationController
     @reservation.picked_up = true
     @reservation.user_check_out = params["picked_up_path"]["name"]
     @reservation.release_form_id = params["picked_up_path"]["form_id"]
-    
-    
+
+
 
     respond_to do |format|
       if @reservation.save!
@@ -91,17 +106,17 @@ class ReservationsController < ApplicationController
     if(session[:rental_category_id].nil?)
       redirect_to shopping_path
     end
-    
-    @start_date = Date.today.beginning_of_month.next_month
-    @end_date = Date.today.end_of_month.next_month
+
+    @start_date = Date.today.next_month.beginning_of_month
+    @end_date = Date.today.next_month.end_of_month
 
     @pickup_date = (params[:reservation_select_dates][:pick_up_date]).to_date
     @return_date = (params[:reservation_select_dates][:return_date]).to_date
-    
+
 
 
     respond_to do |format|
-      if @pickup_date.nil? || @return_date.nil? 
+      if @pickup_date.nil? || @return_date.nil?
           format.html { render :choose_dates }
       else
           if @pickup_date < @start_date || @pickup_date > @end_date
@@ -122,32 +137,32 @@ class ReservationsController < ApplicationController
     end
   end
 
-  
+
   def confirm_user_details
     if(session[:rental_category_id].nil?)
       redirect_to shopping_path
     end
-  
+
     @rental_category = ItemCategory.find(session[:rental_category_id])
-    authorize! :confirm_user_details, nil
+    authorize! :confirm_user_details, Reservation
   end
-  
+
   def edit_user_details
     if(session[:rental_category_id].nil?)
       redirect_to shopping_path
     end
-    
+
     @rental_category = ItemCategory.find(session[:rental_category_id])
     @user = current_user
-    authorize! :edit_user_details, nil
+    authorize! :edit_user_details, Reservation
   end
-  
+
   def submit_user_details
     @user = current_user
     if(!params[:user][:first_name].nil?)
       @user.first_name = params[:user][:first_name]
     end
-    
+
     if(!params[:user][:last_name].nil?)
       @user.last_name = params[:user][:last_name]
     end
@@ -167,12 +182,14 @@ class ReservationsController < ApplicationController
            format.html { render :edit_user_details }
       end
     end
+
+    authorize! :submit_user_details, Reservation
   end
-  
+
   def reservation_error
   end
-  
-  
+
+
   # GET /reservations/1
   # GET /reservations/1.json
   def show
@@ -186,7 +203,7 @@ class ReservationsController < ApplicationController
   def new
     @reservation = Reservation.new
     authorize! :new, @reservation
-    
+
     if(session[:rental_category_id].nil? || session[:pickup_date].nil? ||
       session[:return_date].nil? || session[:start_date].nil? || session[:end_date].nil?)
       redirect_to shopping_path
@@ -209,24 +226,24 @@ class ReservationsController < ApplicationController
   def create
     @reservation = Reservation.new(reservation_params)
     @reservation.teacher_id = current_user.id
-    
+
     if(session[:rental_category_id].nil?)
       redirect_to shopping_path
     end
-    
-   
+
+
     reservation_category = ItemCategory.find(session[:rental_category_id])
     #Nasty race condition if multiple ppl grab same kit
     @@semaphore.synchronize {
       kit_pool = Kit.available_for_item_category(reservation_category)
-  
+
       test_kit = kit_pool.sample
       if(!test_kit.nil?)
           test_kit.set_reserved
           test_kit.reload
           @reservation.kit_id = test_kit.id
       end
-      
+
       respond_to do |format|
         if @reservation.save
           format.html { redirect_to rental_history_path(current_user), notice: 'Thank you for supporting the STEAM Kit rental program.' }

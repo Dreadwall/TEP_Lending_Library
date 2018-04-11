@@ -23,7 +23,12 @@
 
             <!-- only teachers, managers, admins -->
             <% if current_user.role != 'volunteer' %>
-              <%= render :partial => "partials/account_link.html.erb" %>
+            <%= render :partial => "partials/account_link.html.erb" %>
+            <% end %>
+
+            <!-- only volunteers -->
+            <% if current_user.has_role?(:volunteer) %>
+              <li><%= link_to "LOGOUT", destroy_user_session_path, method: :delete  %></li>
             <% end %>
 
           <% else %>

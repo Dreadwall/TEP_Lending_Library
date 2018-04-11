@@ -1,4 +1,4 @@
- 
+
  <div class="cell-block-y">
   <div class="grid-container">
 
@@ -14,9 +14,9 @@
           <p> Unfortunately all of our kits are currently out.</p>
           </br>
           <p> Check back next week!.</p>
-      
-        <% else %> 
-        
+
+        <% else %>
+
           <% @rental_categories.each do |rental_cat| %>
             <div class="product-card-container cell-block-x">
               <div class="product-card">
@@ -27,13 +27,13 @@
                 <div class="product-card-button center">
                   <%= link_to 'Details', available_kit_path(rental_cat) %>
                 </div>
-                <div class="product-card-button center">	
-                  <%= link_to 'Rent Me', confirm_user_details_path(), :onclick => session[:rental_category_id] = rental_cat.id %>	
+                <div class="product-card-button center">
+                  <%= link_to 'Rent Me', confirm_user_details_path(), :onclick => session[:rental_category_id] = rental_cat.id %>
                 </div>
               </div>
             </div>
           <% end %>
-          
+
         <% end %>
       </div>
     </div>

@@ -188,6 +188,11 @@ class UserTest < ActiveSupport::TestCase
 		assert_equal "4120009999", @user.phone_num
 	end
 
+	test 'trim spaces before validation' do
+		assert_equal "\s412-000-9999\s\s", @user8.phone_num
+		assert @user8.valid?
+	end
+
 	test 'can rent method' do
 		assert @user.can_rent
 		refute @user2.can_rent
