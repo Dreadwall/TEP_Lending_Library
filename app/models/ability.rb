@@ -60,6 +60,8 @@ class Ability
         can :read, Kit
         can :show, Kit
 
+        can :home, :home
+
     elsif user.has_role? :teacher
       can :show, User do |u|
         u.id == user.id
@@ -75,11 +77,12 @@ class Ability
         r.teacher_id == user.id
       end
 
-
+      can :home, :home
       can :steamkits, ItemCategory
 
 
     else
+      can :home, :home
       can :steamkits, ItemCategory
     end
 
