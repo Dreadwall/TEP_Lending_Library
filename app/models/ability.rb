@@ -56,11 +56,12 @@ class Ability
         u.id == user.id
       end
 
+      can :confirm_user, Reservation
+
       can :crud, Reservation do |r|
         r.teacher_id == user.id
       end
 
-      can :confirm_user, Reservation
 
       can :steamkits, ItemCategory
 
