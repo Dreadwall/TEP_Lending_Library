@@ -12,9 +12,9 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if current_user
-      if (current_user.has_role?(:volunteer) || current_user.has_role?(:admin) || current_user.has_role?(:manager))
+      if (current_user.has_role?(:admin) || current_user.has_role?(:manager))
         dashboard_path
-      elsif (current_user.has_role?(:teacher))
+      elsif (current_user.has_role?(:teacher) || current_user.has_role?(:volunteer))
         root_path
       end
     end

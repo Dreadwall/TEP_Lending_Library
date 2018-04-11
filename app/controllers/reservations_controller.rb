@@ -129,7 +129,7 @@ class ReservationsController < ApplicationController
     end
 
     @rental_category = ItemCategory.find(session[:rental_category_id])
-    authorize! :confirm_user_details, Reservation, :message => "Unable to confirm user details"
+    authorize! :confirm_user_details, Reservation
   end
 
   def edit_user_details
@@ -139,7 +139,7 @@ class ReservationsController < ApplicationController
 
     @rental_category = ItemCategory.find(session[:rental_category_id])
     @user = current_user
-    authorize! :edit_user_details, Reservation, :message => "Unable to edit user details"
+    authorize! :edit_user_details, Reservation
   end
 
   def submit_user_details
@@ -168,7 +168,7 @@ class ReservationsController < ApplicationController
       end
     end
 
-    authorize! :submit_user_details, Reservation, :message => "Unable to submit user details"
+    authorize! :submit_user_details, Reservation
   end
 
   def reservation_error

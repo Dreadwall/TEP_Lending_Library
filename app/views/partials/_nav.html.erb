@@ -22,9 +22,9 @@
             <% end %>
 
             <!-- only teachers, managers, admins -->
-            <% if current_user.role != 'volunteer' %>
+
               <%= render :partial => "partials/account_link.html.erb" %>
-            <% end %>
+            
 
           <% else %>
             <!-- if you're not logged in -->
