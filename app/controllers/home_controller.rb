@@ -56,7 +56,6 @@ class HomeController < ApplicationController
 			unless @user.save
 				unless @user.errors.messages[:email] == ["has already been taken"]
 					failed_emails.push(row['email'])
-          failed_emails.push(@user.errors.messages)
 				end
 			end
 		end
